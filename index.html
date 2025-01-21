@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktywny ekran</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('swipe.png') no-repeat center center;
+            background-size: cover;
+            width: 1200px;
+            height: 1920px;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            width: 1200px;
+            height: 1920px;
+        }
+
+        .image {
+            position: absolute;
+        }
+
+        #boy {
+            width: 260.6809px;
+            height: 260.6809px;
+            left: 167.3404px;
+            top: 869.3404px;
+        }
+
+        #girl {
+            width: 244.8723px;
+            height: 244.8723px;
+            left: 1025.4362px;
+            top: 877.4362px;
+        }
+
+        #heart {
+            width: 244.8723px;
+            height: 244.8723px;
+            left: 147.8613px;
+            top: 1171.827px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="boy" class="image" src="boy1.png" alt="Chłopak">
+        <img id="girl" class="image" src="girl1.png" alt="Dziewczyna">
+        <img id="heart" class="image" src="serce.png" alt="Serce">
+    </div>
+    <script>
+        const boy = document.getElementById('boy');
+        const heart = document.getElementById('heart');
+        const girl = document.getElementById('girl');
+        const body = document.body;
+
+        const heartStartX = 147.8613;
+        const heartEndX = 1049.8613;
+        const boyStartX = 167.3404;
+        const boyEndX = 897.3404;
+
+        let heartCurrentX = heartStartX;
+
+        function updatePositions() {
+            const progress = (heartCurrentX - heartStartX) / (heartEndX - heartStartX);
+            const boyCurrentX = boyStartX + progress * (boyEndX - boyStartX);
+
+            boy.style.left = `${boyCurrentX}px`;
+            heart.style.left = `${heartCurrentX}px`;
+
+            if (boyCurrentX >= boyEndX) {
+                body.style.background = "url('last.png') no-repeat center center";
+                body.style.backgroundSize = "cover";
+
+                boy.src = 'boy2.png';
+                girl.src = 'girl2.png';
+
+                const muah = document.createElement('img');
+                muah.src = 'muah.png';
+                muah.style.position = 'absolute';
+                muah.style.left = '50%';
+                muah.style.top = '50%';
+                muah.style.transform = 'translate(-50%, -50%)';
+                muah.style.zIndex = 10;
+                body.appendChild(muah);
+            }
+        }
+
+        heart.addEventListener('mousedown', (e) => {
+            const startX = e.clientX;
+
+            function onMouseMove(event) {
+                const deltaX = event.clientX - startX;
+                heartCurrentX = Math.min(Math.max(heartStartX, heartCurrentX + deltaX), heartEndX);
+                updatePositions();
+            }
+
+            function onMouseUp() {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+    </script>
+</body>
+</html>
