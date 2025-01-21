@@ -5,29 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interaktywny ekran</title>
     <style>
+        /* Styl dla całego ekranu */
         body {
             margin: 0;
-            overflow: hidden;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('swipe.png') no-repeat center center;
-            background-size: cover;
-            width: 1200px;
-            height: 1920px;
-            position: relative;
+            background-color: #000; /* Czarny dla lepszego kontrastu */
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
         }
 
+        /* Kontener skalowany */
         .container {
             position: relative;
             width: 1200px;
             height: 1920px;
+            transform-origin: top left;
+            transform: scale(calc(100vw / 1200), calc(100vh / 1920));
+            background: url('swipe.png') no-repeat center center;
+            background-size: cover;
         }
 
+        /* Styl dla obrazków */
         .image {
             position: absolute;
         }
 
+        /* Pozycje obrazków */
         #boy {
             width: 260.6809px;
             height: 260.6809px;
@@ -43,8 +50,7 @@
         }
 
         #heart {
-            width: 244.8723px;
-            height: 244.8723px;
+            /* Brak skalowania, wyświetlany w oryginalnym rozmiarze */
             left: 147.8613px;
             top: 1171.827px;
         }
