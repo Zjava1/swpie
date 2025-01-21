@@ -47,71 +47,19 @@
             height: 244.8723px;
             left: 147.8613px;
             top: 1171.827px;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Obraz chłopaka -->
         <img id="boy" class="image" src="boy1.png" alt="Chłopak">
+        
+        <!-- Obraz dziewczyny -->
         <img id="girl" class="image" src="girl1.png" alt="Dziewczyna">
+        
+        <!-- Obraz serca -->
         <img id="heart" class="image" src="serce.png" alt="Serce">
     </div>
-    <script>
-        const boy = document.getElementById('boy');
-        const heart = document.getElementById('heart');
-        const girl = document.getElementById('girl');
-        const body = document.body;
-
-        const heartStartX = 147.8613;
-        const heartEndX = 1049.8613;
-        const boyStartX = 167.3404;
-        const boyEndX = 897.3404;
-
-        let heartCurrentX = heartStartX;
-
-        function updatePositions() {
-            const progress = (heartCurrentX - heartStartX) / (heartEndX - heartStartX);
-            const boyCurrentX = boyStartX + progress * (boyEndX - boyStartX);
-
-            boy.style.left = `${boyCurrentX}px`;
-            heart.style.left = `${heartCurrentX}px`;
-
-            if (boyCurrentX >= boyEndX) {
-                body.style.background = "url('last.png') no-repeat center center";
-                body.style.backgroundSize = "cover";
-
-                boy.src = 'boy2.png';
-                girl.src = 'girl2.png';
-
-                const muah = document.createElement('img');
-                muah.src = 'muah.png';
-                muah.style.position = 'absolute';
-                muah.style.left = '50%';
-                muah.style.top = '50%';
-                muah.style.transform = 'translate(-50%, -50%)';
-                muah.style.zIndex = 10;
-                body.appendChild(muah);
-            }
-        }
-
-        heart.addEventListener('mousedown', (e) => {
-            const startX = e.clientX;
-
-            function onMouseMove(event) {
-                const deltaX = event.clientX - startX;
-                heartCurrentX = Math.min(Math.max(heartStartX, heartCurrentX + deltaX), heartEndX);
-                updatePositions();
-            }
-
-            function onMouseUp() {
-                document.removeEventListener('mousemove', onMouseMove);
-                document.removeEventListener('mouseup', onMouseUp);
-            }
-
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
-        });
-    </script>
 </body>
 </html>
